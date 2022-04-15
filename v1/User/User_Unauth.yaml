@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'User_Unauth'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'localhost'
+paths:
+  /user:
+    post:
+      summary: 'Create user endpoint: Provide user info, returns 200 and user details'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUserInfo'
+        description: User infomation to create
+        required: true
+      responses:
+        '200':
+          description: 'response: Details about a user just created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSysInfo'
+
+components:
+  schemas:
+    UserUserInfo:
+      type: object
+      required:
+        - username
+          password
+      properties: 
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username: 
+          type: string
+        password:
+          type: string
+          format: password
+    UserSysInfo:
+      type: object
+      required:
+        - id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username: 
+          type: string
+        account_created:
+          type: object
+          format: date-time
+        account_updated:
+          type: object
+          format: date-time
+        id:
+          type: integer
+          format: int64
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
